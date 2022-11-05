@@ -17,6 +17,8 @@ def getImgdir():
     limg1.configure(image=newImg)
     limg1.image=newImg
     # canvas1.itemconfig(canvas2,image=ImageTk.PhotoImage(Image.open(imgdir)))
+def processimg():
+    pass
 
 window = tk.Tk()
 window.geometry("720x480")
@@ -40,7 +42,7 @@ limg1=tk.Label(window)
 limg1.grid(row=2,column=0,sticky='w',columnspan=3,padx=10,pady=10)
 limg1.config(width=300,height=300)
 limg2=tk.Label(window)
-limg2.grid(row=2,column=4,sticky='w',columnspan=3,padx=10,pady=10)
+limg2.grid(row=2,column=3,sticky='w',columnspan=3,padx=10,pady=10)
 limg2.config(width=300,height=300)
 limg1.config(image=img1)
 limg2.config(image=img2)
@@ -51,7 +53,10 @@ button1.config(command=lambda:getFoldir())
 button2.config(command=lambda:getImgdir())
 button1.grid(row=0,column=0,padx=5,pady=5)
 button2.grid(row=1,column=0,padx=5,pady=5)
-n_rows=3
+processbutton=tk.Button(window,text="input folder",bg="red",justify="center")
+processbutton.config(command=lambda:processimg())
+processbutton.grid(row=3,column=2,sticky="nwse",columnspan=2)
+n_rows=4
 n_columns=6
 for i in range(n_rows):
     window.grid_rowconfigure(i,  weight =1)
