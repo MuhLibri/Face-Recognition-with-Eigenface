@@ -51,5 +51,11 @@ button1.config(command=lambda:getFoldir())
 button2.config(command=lambda:getImgdir())
 button1.grid(row=0,column=0,padx=5,pady=5)
 button2.grid(row=1,column=0,padx=5,pady=5)
+n_rows=3
+n_columns=6
+for i in range(n_rows):
+    window.grid_rowconfigure(i,  weight =1)
+for i in range(n_columns):
+    window.grid_columnconfigure(i,  weight =1)
 
 window.mainloop()
