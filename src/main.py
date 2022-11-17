@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk,Image
 
-imgfiletype=[("jpg image","*.jpg"),("png image","*png")]
+imgfiletype=[("jpg image","*.jpg"),("png image","*.png")]
 
 foldir=""
 def getFoldir():
@@ -53,7 +53,7 @@ button1.config(command=lambda:getFoldir())
 button2.config(command=lambda:getImgdir())
 button1.grid(row=0,column=0,padx=5,pady=5)
 button2.grid(row=1,column=0,padx=5,pady=5)
-processbutton=tk.Button(window,text="input folder",bg="red",justify="center")
+processbutton=tk.Button(window,text="process image",bg="red",justify="center")
 processbutton.config(command=lambda:processimg())
 processbutton.grid(row=3,column=2,sticky="nwse",columnspan=2)
 n_rows=4
