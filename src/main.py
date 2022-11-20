@@ -24,8 +24,13 @@ def getImgdir():
     limg1.image=newImg
     # canvas1.itemconfig(canvas2,image=ImageTk.PhotoImage(Image.open(imgdir)))
 def processimg():
+    global imgdir
     start=time.time()
     a = readAllImgInFolder(foldir)
+    img = cv2.imread(imgdir,cv2.IMREAD_GRAYSCALE)
+    img = cv2.resize(img, (256, 256))
+    if img is not None:
+        img = np.reshape(img, -1)
     print("1")
     b = getMean(a)
     print("2")
@@ -40,7 +45,7 @@ def processimg():
     print("6")
     # x2 = eigenFace(vec1, c)
     m = interpolate.interp1d([min(img), max(img)], [0, 255])
-    p, i = facerecog(m(img), x)
+    p, i = facerecog(m(img), x,a)
     # pp, ii = facerecog(m(img), x2)
     # print(i)
     end=time.time()
