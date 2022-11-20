@@ -1,3 +1,5 @@
+import time
+
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,8 +20,8 @@ def arrayOfFolderImages(filepath):
         arr.append(img)
     return arr
 
-img1=cv.imread("D:/Kuliah/AlGeo/Tubes/Algeo02-21047/src/test/face.jpg")
-img2=cv.imread("D:/Kuliah/AlGeo/Tubes/Algeo02-21047/src/test/Adriana Lima3_152.jpg")
+img1=cv.imread("dataset/pins_Adriana Lima/Adriana Lima0_0.jpg")
+img2=cv.imread("dataset/pins_Adriana Lima/Adriana Lima3_152.jpg")
 img1=cv.cvtColor(img1,cv.COLOR_BGR2GRAY)
 img2=cv.cvtColor(img2,cv.COLOR_BGR2GRAY)
 img1=cv.resize(img1,(240,240))
@@ -86,8 +88,14 @@ def eigen(covarice):
     print(len(factor))
     # for fac,amount in factor:
     #     eigen=sp.solveset(sp.Eq(fac,0),x)
-
-imgArr=arrayOfFolderImages("D:/Kuliah/AlGeo/Tubes/Algeo02-21047/src/dataset/pins_Adriana Lima")
+def getEigenFace(imgArr,eigenVectors):
+    eigenfaces=createImgVector()
+    for i in range (len(imgArr)):
+        eigenface=eigenVectors[i]*imgArr[i][i]
+        eigenfaces+=eigenface
+    return eigenfaces
+start=time.time()
+imgArr=arrayOfFolderImages("dataset/pins_Adriana Lima")
 vecArr=np.empty((len(imgArr[0])*len(imgArr[0]),len(imgArr)))
 count=1
 temp=createImgVector(imgArr[0])
@@ -124,4 +132,6 @@ for i in range(shape):
         testImg[i][j]=meanVec[count]
         count+=1
 # print(testImg.shape)
-cv.imwrite("D:/Kuliah/AlGeo/Tubes/Algeo02-21047/src/test/hasil.jpg",testImg)
+cv.imwrite("hasil.jpg",testImg)
+end=time.time()
+print((end-start)*10**3)
