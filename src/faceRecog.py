@@ -45,7 +45,7 @@ def facerecog (img,eigenfaces,imgList): # timg = training image, imgList = image
             shortestEuclidean = ek
             similiarImage = imgList[i]
             indexSim = i
-    # print(shortestEuclidean)
+    print(shortestEuclidean)
     return similiarImage,indexSim
 
 def normalized(img):
@@ -54,7 +54,7 @@ def normalized(img):
     norm = [(x - mean) for x in img]
     return norm
 
-a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\dataset\\all_12")
+a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\Data Set New")
 b=getMean(a)
 c=getDifference(a,b)
 d=getCovariance(c)
@@ -71,11 +71,13 @@ x=eigenFace(vec,c)
 # img2.save("HASIL.png",format="PNG")
 # img3=Image.fromarray(a[ii].reshape(256,256))
 # img3.save("HASIL1.png",format="PNG")
-img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\dataset\\pins_Alex Lawther\\Alex Lawther64_128.jpg",cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\1668958671146.jpg",cv2.IMREAD_GRAYSCALE)
 img = cv2.resize(img,(256,256))
 if img is not None:
     img=np.reshape(img,-1)
 
+imgS=Image.fromarray(img.reshape(256,256))
+imgS.save("Search.png",format="PNG")
 # image = []
 # image.append(img)
 #b1=getMean(image)
@@ -114,6 +116,7 @@ if img is not None:
 
 # s = normalized(img)
 # print(s)
-img2,i = facerecog(a[4],x,a)
+img2,i = facerecog(img,x,a)
+print(i)
 img2=Image.fromarray(a[i].reshape(256,256))
 img2.save("HASIL.png",format="PNG")
