@@ -22,15 +22,17 @@ def euclideanDistance (eigenfaces1,eigenfaces2):
 
 def facerecog (eigenfaces1,imgList): # timg = training image, imgList = image pada dataset
     shortestEuclidean = 0
+    indexSim = 0
     similiarImage = imgList[0]
     # toleranceLevel = 3
 
     # Mencari euclidean terkecil antara training image dengan dataset
-    for image in imgList: 
-        ek = euclideanDistance(eigenfaces1,image)
+    for i in range (len(imgList)): 
+        ek = euclideanDistance(eigenfaces1,imgList[i])
         if (shortestEuclidean > ek):
             shortestEuclidean = ek
-            similiarImage = image
+            similiarImage = imgList[i]
+            indexSim = i
 
     return similiarImage
 img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\dataset\\pins_Adriana Lima\\Adriana Lima17_70.jpg",cv2.IMREAD_GRAYSCALE)
