@@ -228,20 +228,20 @@ def eigen(A,maxiter=1000):
     for vec in U:
         eigenV.append(vec)
     eigval=np.diag(A)
-    pel=list(zip(eigval,eigenV))
+    # pel=list(zip(eigval,eigenV))
     # print(pel)
     # for i in range(len(eigval)):
     #     pel.append((eigval[i],eigenV[i]))
-    pel.sort(key=lambda tup: tup[0], reverse=True)
-    eigvals=[]
-    eigvecs=[]
-    for x in pel:
-        eigval,eigvec=x
-        eigvals.append(eigval)
-        eigvecs.append(eigvec)
+    # pel.sort(key=lambda tup: tup[0], reverse=True)
+    # eigvals=[]
+    # eigvecs=[]
+    # for x in pel:
+    #     eigval,eigvec=x
+    #     eigvals.append(eigval)
+        # eigvecs.append(eigvec)
     # print(A)
     # print(len(A),len(A[0]))
-    return eigvals,eigvecs;
+    return eigval,eigenV;
 # def eigen(A, maxiter=1000):
 #     n = len(A)
 #     U = np.identity(n)

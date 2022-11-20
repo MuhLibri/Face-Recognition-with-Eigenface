@@ -9,55 +9,111 @@ import scipy
 from scipy import interpolate
 
 
-def euclideanDistance (eigenfaces1,eigenfaces2):
+def euclideanDistance (weight1,weight2):
     sumDiff = 0
 
     # Menghitung jumlah selisih kuadrat eigenface training image dengan eigenface dataset
     # for i in range (len(eigenfaces2)):
     #     sumDiff += (eigenfaces1[i] - eigenfaces2[i]) ** 2
     
-    sumDiff = np.subtract(eigenfaces2,eigenfaces1)
-    sumDiff = list(map(lambda x: pow(x,2), sumDiff))
-    sumDiff = np.sum(sumDiff)
+    # sumDiff = np.subtract(eigenfaces2,eigenfaces1)
+    # sumDiff = list(map(lambda x: pow(x,2), sumDiff))
+    # sumDiff = np.sum(sumDiff)
+    sumDiff = (weight1-weight2) ** 2
 
     # Menghitung jarak terpendek
-    ek = math.sqrt(sumDiff)
+    ek = np.sqrt(sumDiff)
     return ek
 
-def facerecog (eigenfaces1,imgList): # timg = training image, imgList = image pada dataset
-    shortestEuclidean = euclideanDistance(eigenfaces1,imgList[0])
+def facerecog (img,eigenfaces,imgList): # timg = training image, imgList = image pada dataset
+    # shortestEuclidean = euclideanDistance(img,eigenfaces[0])
+    norm1 = normalized(img)
+    weigth1 = np.dot(norm1,eigenfaces[0])
+    weight2 = np.dot(normalized(imgList[0]),eigenfaces[0])
+    shortestEuclidean = euclideanDistance(weigth1,weight2)
     indexSim = 0
     similiarImage = imgList[0]
     # toleranceLevel = 3
 
     # Mencari euclidean terkecil antara training image dengan dataset
-    for i in range (1,len(imgList)): 
-        ek = euclideanDistance(eigenfaces1,imgList[i])
-        print(ek)
+    for i in range (1,len(eigenfaces)):
+        weigth1 = np.dot(norm1,eigenfaces[i])
+        weight2 = np.dot(normalized(imgList[i]),eigenfaces[i])
+        ek = euclideanDistance(weigth1,weight2)
+        #print(ek)
         if (shortestEuclidean > ek):
             shortestEuclidean = ek
             similiarImage = imgList[i]
             indexSim = i
-
+    # print(shortestEuclidean)
     return similiarImage,indexSim
-img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\dataset\\pins_Adriana Lima\\Adriana Lima139_40.jpg",cv2.IMREAD_GRAYSCALE)
-img = cv2.resize(img,(256,256))
-if img is not None:
-    
-    img=np.reshape(img,-1)
+
+def normalized(img):
+    sum = np.sum(img)
+    mean = sum/len(img)
+    norm = [(x - mean) for x in img]
+    return norm
+
 a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\dataset\\all_12")
 b=getMean(a)
 c=getDifference(a,b)
 d=getCovariance(c)
-val,vec=eigen(d,100)
-val1,vec1=np.linalg.eig(d)
+val,vec=eigen(d,1)
+#val1,vec1=np.linalg.eig(d)
 x=eigenFace(vec,c)
-x2=eigenFace(vec1,c)
-m=interpolate.interp1d([min(img),max(img)],[0,255])
-p,i=facerecog(img,x)
-pp,ii=facerecog(img,x2)
-print(i)
+# x2=eigenFace(vec1,c)
+# m=interpolate.interp1d([min(img),max(img)],[0,255])
+# pa=m(img)
+# p,i=facerecog(pa,x)
+# pp,ii=facerecog(pa,x2)
+# print(i)
+# img2=Image.fromarray(a[i].reshape(256,256))
+# img2.save("HASIL.png",format="PNG")
+# img3=Image.fromarray(a[ii].reshape(256,256))
+# img3.save("HASIL1.png",format="PNG")
+img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\dataset\\pins_Alex Lawther\\Alex Lawther64_128.jpg",cv2.IMREAD_GRAYSCALE)
+img = cv2.resize(img,(256,256))
+if img is not None:
+    img=np.reshape(img,-1)
+
+# image = []
+# image.append(img)
+#b1=getMean(image)
+
+# c1=getDifference(image,mean)
+# d1=getCovariance(c1)
+# val1,vec1=eigen(d1,1)
+# #val1,vec1=np.linalg.eig(d)
+# x1=eigenFace(vec1,c1)
+# print(image)
+# sum = sum(img)
+# mean = sum/len(img)
+# c1=getDifference(image,mean)
+# print(c1)
+# d1=np.matmul(c1,np.transpose(c1))
+# print(d1)
+# val1,vec1=np.linalg.eig(d1)
+# #x1=eigenFace(vec1,c1)
+# # print(img.shape)
+# # img=[img]
+# # image=[]
+# # image.append(img)
+# # print(len(image),len(image[0]))
+# # oo,op=img.shape
+# # print(oo,op)
+# # b1 = getMean(img)
+# # c1 = getDifference(img,b1)
+# # d1=getCovariance(image)
+# # val1,vec1=eigen(d1,1)
+# # x1=eigenFace(vec1,np.transpose(c))
+# print(vec1)
+# v = vec1[0]
+# print(len(v))
+# print(len(np.subtract(img,mean)))
+# o = np.cross(v,np.subtract(img,mean))
+
+# s = normalized(img)
+# print(s)
+img2,i = facerecog(a[4],x,a)
 img2=Image.fromarray(a[i].reshape(256,256))
 img2.save("HASIL.png",format="PNG")
-img3=Image.fromarray(a[ii].reshape(256,256))
-img3.save("HASIL1.png",format="PNG")
