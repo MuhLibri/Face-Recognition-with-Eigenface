@@ -268,7 +268,7 @@ def saveEigenFaces(eigenfaces):
     for i in range(len(eigenfaces)):
         img=PIL.Image.fromarray(eigenfaces[i].reshape(256,256))
         img=img.convert("L")
-        img.save("hasil1/"+str(i)+".png",format="PNG")
+        img.save("hasil/"+str(i)+".png",format="PNG")
 start=time.time()
 # a=[[random.random() for i in range(3)] for i in range(3)]
 # print(a)
