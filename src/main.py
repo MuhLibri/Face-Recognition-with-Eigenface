@@ -27,6 +27,7 @@ def processimg():
     global imgdir
     start=time.time()
     a = readAllImgInFolder(foldir)
+    a2=readAllImgInFolderRGB(foldir)
     img = cv2.imread(imgdir,cv2.IMREAD_GRAYSCALE)
     img = cv2.resize(img, (256, 256))
     if img is not None:
@@ -50,8 +51,9 @@ def processimg():
     # pp, ii = facerecog(m(img), x2)
     # print(i)
     end=time.time()
-    img2 = Image.fromarray(a[i].reshape(256, 256))
-    newImg = ImageTk.PhotoImage(img2.resize((256, 256)))
+    img2 = Image.fromarray(a2[i])
+    # newImg = ImageTk.PhotoImage(img2.resize((256, 256)))
+    newImg = ImageTk.PhotoImage(img2)
     limg2.configure(image=newImg)
     limg2.image=newImg
     lextime2.configure(text=str(end-start))

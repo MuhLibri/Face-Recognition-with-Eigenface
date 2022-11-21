@@ -7,6 +7,15 @@ import cv2
 from PIL import *
 import  numpy as np
 import scipy
+def readAllImgInFolderRGB(path):
+    imglist=[]
+    for file in os.listdir(path):
+        img = cv2.imread(os.path.join(path,file),cv2.IMREAD_ANYCOLOR)
+        # img = cv2.resize(img,(256,256))
+        if img is not None:
+            # img=np.reshape(img,-1)
+            imglist.append(img)
+    return imglist
 def readAllImgInFolder(path):
     imglist=[]
     for file in os.listdir(path):
@@ -49,29 +58,6 @@ def getCovariance(difference):
         # covariance.append(np.matmul(dif,at))
     # covariance = (covariance / len(difference))
     return covariance
-def QR_factorisation_Householder_double(A):
-    """Perform QR factorisation in double floating-point precision.
-    :param A: The matrix to factorise.
-    :type A: :py:class:`numpy.ndarray`
-    :returns: The matrix Q and the matrix R.
-    :rtype: tuple
-    """
-    A = np.array(A, 'float')
-
-    n, m = A.shape
-    V = np.zeros_like(A, 'float')
-    for k in range(n):
-        V[k:, k] = A[k:, k].copy()
-        V[k, k] += np.sign(V[k, k]) * np.linalg.norm(V[k:, k], 2)
-        V[k:, k] /= np.linalg.norm(V[k:, k], 2)
-        A[k:, k:] -= 2 * np.outer(V[k:, k], np.dot(V[k:, k], A[k:, k:]))
-    R = np.triu(A[:n, :n])
-
-    Q = np.eye(m, n)
-    for k in range((n - 1), -1, -1):
-        Q[k:, k:] -= np.dot((2 * (np.outer(V[k:, k], V[k:, k]))), Q[k:, k:])
-    # print(R)
-    return Q, R
 # def QRDecomposition(covariant):
 #     A=np.copy(covariant)
 #     # print(len(A),len(A[0]))
