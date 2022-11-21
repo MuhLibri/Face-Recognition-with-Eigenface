@@ -25,27 +25,42 @@ def euclideanDistance (weight1,weight2):
     ek = np.sqrt(sumDiff)
     return ek
 
-def facerecog (img,eigenfaces,imgList,mean): # timg = training image, imgList = image pada dataset
+def euclideanDistance (weight1,weight2):
+    sumDiff = 0
+
+    # Menghitung jumlah selisih kuadrat eigenface training image dengan eigenface dataset
+    # for i in range (len(eigenfaces2)):
+    #     sumDiff += (eigenfaces1[i] - eigenfaces2[i]) ** 2
+    
+    sumDiff = np.subtract(weight1,weight2)
+    sumDiff = list(map(lambda x: pow(x,2), sumDiff))
+    sumDiff = np.sum(sumDiff)
+    # sumDiff = (weight1-weight2) ** 2
+
+    # Menghitung jarak terpendek
+    ek = np.sqrt(sumDiff)
+    return ek
+
+def facerecog (img,eigenfaces,normimgList,mean): # timg = training image, imgList = image pada dataset
     # shortestEuclidean = euclideanDistance(img,eigenfaces[0])
     norm1 = normalized(img,mean)
-    weigth1 = np.dot(norm1,eigenfaces[0])
-    weight2 = np.dot(normalized(imgList[0],mean),eigenfaces[0])
-    shortestEuclidean = euclideanDistance(weigth1,weight2)
+    teigenfaces = np.transpose(eigenfaces)
+    weigth1 = np.dot(norm1,teigenfaces)
+    weight2 = np.dot(normimgList,teigenfaces)
+    shortestEuclidean = euclideanDistance(weigth1[0],weight2[0])
     indexSim = 0
-    similiarImage = imgList[0]
+    #similiarImage = [0]
     # toleranceLevel = 3
 
     # Mencari euclidean terkecil antara training image dengan dataset
     for i in range (1,len(eigenfaces)):
-        weigth1 = np.dot(norm1,eigenfaces[i])
-        weight2 = np.dot(normalized(imgList[i],mean),eigenfaces[i])
-        ek = euclideanDistance(weigth1,weight2)
+        ek = euclideanDistance(weigth1[0],weight2[i])
         if (shortestEuclidean > ek):
             shortestEuclidean = ek
-            similiarImage = imgList[i]
             indexSim = i
+
     print(shortestEuclidean)
-    return similiarImage,indexSim
+    return indexSim
 
 def normalized(img,mean):
     norm = np.subtract(img,mean)
@@ -119,5 +134,23 @@ def normalized(img,mean):
 
 # img2,i = facerecog(img,x,a,b)
 # print(i)
+# img2=Image.fromarray(a[i].reshape(256,256))
+# img2.save("HASIL.png",format="PNG")
+
+# Coba baru
+# a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\Data Set New")
+# b=getMean(a)
+# c=getDifference(a,b)
+# d=getCovariance(c)
+# val,vec=eigen(d,1)
+# x=eigenFace(vec,c)
+
+# img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\IMG_20221119_122233.jpg",cv2.IMREAD_GRAYSCALE)
+# img = cv2.resize(img,(256,256))
+# if img is not None:
+#     img=np.reshape(img,-1)
+
+# image = [img]
+# i = facerecog(image,x,c,b)
 # img2=Image.fromarray(a[i].reshape(256,256))
 # img2.save("HASIL.png",format="PNG")
