@@ -25,11 +25,11 @@ def euclideanDistance (weight1,weight2):
     ek = np.sqrt(sumDiff)
     return ek
 
-def facerecog (img,eigenfaces,imgList): # timg = training image, imgList = image pada dataset
+def facerecog (img,eigenfaces,imgList,mean): # timg = training image, imgList = image pada dataset
     # shortestEuclidean = euclideanDistance(img,eigenfaces[0])
-    norm1 = normalized(img)
+    norm1 = normalized(img,mean)
     weigth1 = np.dot(norm1,eigenfaces[0])
-    weight2 = np.dot(normalized(imgList[0]),eigenfaces[0])
+    weight2 = np.dot(normalized(imgList[0],mean),eigenfaces[0])
     shortestEuclidean = euclideanDistance(weigth1,weight2)
     indexSim = 0
     similiarImage = imgList[0]
@@ -38,9 +38,8 @@ def facerecog (img,eigenfaces,imgList): # timg = training image, imgList = image
     # Mencari euclidean terkecil antara training image dengan dataset
     for i in range (1,len(eigenfaces)):
         weigth1 = np.dot(norm1,eigenfaces[i])
-        weight2 = np.dot(normalized(imgList[i]),eigenfaces[i])
+        weight2 = np.dot(normalized(imgList[i],mean),eigenfaces[i])
         ek = euclideanDistance(weigth1,weight2)
-        #print(ek)
         if (shortestEuclidean > ek):
             shortestEuclidean = ek
             similiarImage = imgList[i]
@@ -48,10 +47,8 @@ def facerecog (img,eigenfaces,imgList): # timg = training image, imgList = image
     print(shortestEuclidean)
     return similiarImage,indexSim
 
-def normalized(img):
-    sum = np.sum(img)
-    mean = sum/len(img)
-    norm = [(x - mean) for x in img]
+def normalized(img,mean):
+    norm = np.subtract(img,mean)
     return norm
 
 a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\Data Set New")
@@ -71,7 +68,7 @@ x=eigenFace(vec,c)
 # img2.save("HASIL.png",format="PNG")
 # img3=Image.fromarray(a[ii].reshape(256,256))
 # img3.save("HASIL1.png",format="PNG")
-img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\1668958671146.jpg",cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\20221119_204102.jpg",cv2.IMREAD_GRAYSCALE)
 img = cv2.resize(img,(256,256))
 if img is not None:
     img=np.reshape(img,-1)
@@ -116,7 +113,11 @@ imgS.save("Search.png",format="PNG")
 
 # s = normalized(img)
 # print(s)
-img2,i = facerecog(img,x,a)
+print(b)
+# imgM = Image.fromarray(b.reshape(256,256))
+# imgM.save("MEAN.png",format="PNG")
+
+img2,i = facerecog(img,x,a,b)
 print(i)
 img2=Image.fromarray(a[i].reshape(256,256))
 img2.save("HASIL.png",format="PNG")
