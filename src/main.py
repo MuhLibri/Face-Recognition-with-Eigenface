@@ -45,7 +45,8 @@ def processimg():
     print("6")
     # x2 = eigenFace(vec1, c)
     # m = interpolate.interp1d([min(img), max(img)], [0, 255])
-    i = facerecog(img, x,a,b)
+    img=[img]
+    i = facerecog(img, x,c,b)
     # pp, ii = facerecog(m(img), x2)
     # print(i)
     end=time.time()

@@ -50,13 +50,13 @@ def normalized(img,mean):
     norm = np.subtract(img,mean)
     return norm
 
-a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\Downloads\\Algeo02-21047\\src\\Data Set New")
-b=getMean(a)
-c=getDifference(a,b)
-d=getCovariance(c)
-val,vec=eigen(d,1)
-#val1,vec1=np.linalg.eig(d)
-x=eigenFace(vec,c)
+# a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\Downloads\\Algeo02-21047\\src\\Data Set New")
+# b=getMean(a)
+# c=getDifference(a,b)
+# d=getCovariance(c)
+# val,vec=eigen(d,1)
+# #val1,vec1=np.linalg.eig(d)
+# x=eigenFace(vec,c)
 # x2=eigenFace(vec1,c)
 # m=interpolate.interp1d([min(img),max(img)],[0,255])
 # pa=m(img)
@@ -67,14 +67,14 @@ x=eigenFace(vec,c)
 # img2.save("HASIL.png",format="PNG")
 # img3=Image.fromarray(a[ii].reshape(256,256))
 # img3.save("HASIL1.png",format="PNG")
-img = cv2.imread("C:\\Users\\Muhammad Libri\\Downloads\\Algeo02-21047\\src\\IMG20201216191636.jpg",cv2.IMREAD_GRAYSCALE)
-img = cv2.resize(img,(256,256))
-if img is not None:
-    img=np.reshape(img,-1)
+# img = cv2.imread("C:\\Users\\Muhammad Libri\\Downloads\\Algeo02-21047\\src\\IMG20201216191636.jpg",cv2.IMREAD_GRAYSCALE)
+# img = cv2.resize(img,(256,256))
+# if img is not None:
+#     img=np.reshape(img,-1)
 
-imgS=Image.fromarray(img.reshape(256,256))
-imgS.save("Search.png",format="PNG")
-# image = []
+# imgS=Image.fromarray(img.reshape(256,256))
+# imgS.save("Search.png",format="PNG")
+# # image = []
 # image.append(img)
 #b1=getMean(image)
 
@@ -115,9 +115,9 @@ imgS.save("Search.png",format="PNG")
 #print(b)
 # imgM = Image.fromarray(b.reshape(256,256))
 # imgM.save("MEAN.png",format="PNG")
-print(len(x))
-image = [img]
-i = facerecog(image,x,c,b)
-print(i)
-img2=Image.fromarray(a[i].reshape(256,256))
-img2.save("HASIL.png",format="PNG")
+# print(len(x))
+# image = [img]
+# i = facerecog(image,x,c,b)
+# print(i)
+# img2=Image.fromarray(a[i].reshape(256,256))
+# img2.save("HASIL.png",format="PNG")
