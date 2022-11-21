@@ -16,45 +16,41 @@ def euclideanDistance (weight1,weight2):
     # for i in range (len(eigenfaces2)):
     #     sumDiff += (eigenfaces1[i] - eigenfaces2[i]) ** 2
     
-    # sumDiff = np.subtract(eigenfaces2,eigenfaces1)
-    # sumDiff = list(map(lambda x: pow(x,2), sumDiff))
-    # sumDiff = np.sum(sumDiff)
-    sumDiff = (weight1-weight2) ** 2
+    sumDiff = np.subtract(weight1,weight2)
+    sumDiff = list(map(lambda x: pow(x,2), sumDiff))
+    sumDiff = np.sum(sumDiff)
+    # sumDiff = (weight1-weight2) ** 2
 
     # Menghitung jarak terpendek
     ek = np.sqrt(sumDiff)
     return ek
 
-def facerecog (img,eigenfaces,imgList): # timg = training image, imgList = image pada dataset
+def facerecog (img,eigenfaces,normimgList,mean): # timg = training image, imgList = image pada dataset
     # shortestEuclidean = euclideanDistance(img,eigenfaces[0])
-    norm1 = normalized(img)
-    weigth1 = np.dot(norm1,eigenfaces[0])
-    weight2 = np.dot(normalized(imgList[0]),eigenfaces[0])
-    shortestEuclidean = euclideanDistance(weigth1,weight2)
+    norm1 = normalized(img,mean)
+    teigenfaces = np.transpose(eigenfaces)
+    weigth1 = np.dot(norm1,teigenfaces)
+    weight2 = np.dot(normimgList,teigenfaces)
+    shortestEuclidean = euclideanDistance(weigth1[0],weight2[0])
     indexSim = 0
-    similiarImage = imgList[0]
+    #similiarImage = [0]
     # toleranceLevel = 3
 
     # Mencari euclidean terkecil antara training image dengan dataset
     for i in range (1,len(eigenfaces)):
-        weigth1 = np.dot(norm1,eigenfaces[i])
-        weight2 = np.dot(normalized(imgList[i]),eigenfaces[i])
-        ek = euclideanDistance(weigth1,weight2)
-        #print(ek)
+        ek = euclideanDistance(weigth1[0],weight2[i])
         if (shortestEuclidean > ek):
             shortestEuclidean = ek
-            similiarImage = imgList[i]
             indexSim = i
-    print(shortestEuclidean)
-    return similiarImage,indexSim
 
-def normalized(img):
-    sum = np.sum(img)
-    mean = sum/len(img)
-    norm = [(x - mean) for x in img]
+    print(shortestEuclidean)
+    return indexSim
+
+def normalized(img,mean):
+    norm = np.subtract(img,mean)
     return norm
 
-a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\Data Set New")
+a=readAllImgInFolder("C:\\Users\\Muhammad Libri\\Downloads\\Algeo02-21047\\src\\Data Set New")
 b=getMean(a)
 c=getDifference(a,b)
 d=getCovariance(c)
@@ -71,7 +67,7 @@ x=eigenFace(vec,c)
 # img2.save("HASIL.png",format="PNG")
 # img3=Image.fromarray(a[ii].reshape(256,256))
 # img3.save("HASIL1.png",format="PNG")
-img = cv2.imread("C:\\Users\\Muhammad Libri\\OneDrive - Institut Teknologi Bandung\\Documents\\Algeo02-21047\\src\\1668958671146.jpg",cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("C:\\Users\\Muhammad Libri\\Downloads\\Algeo02-21047\\src\\IMG20201216191636.jpg",cv2.IMREAD_GRAYSCALE)
 img = cv2.resize(img,(256,256))
 if img is not None:
     img=np.reshape(img,-1)
@@ -116,7 +112,12 @@ imgS.save("Search.png",format="PNG")
 
 # s = normalized(img)
 # print(s)
-img2,i = facerecog(img,x,a)
+#print(b)
+# imgM = Image.fromarray(b.reshape(256,256))
+# imgM.save("MEAN.png",format="PNG")
+print(len(x))
+image = [img]
+i = facerecog(image,x,c,b)
 print(i)
 img2=Image.fromarray(a[i].reshape(256,256))
 img2.save("HASIL.png",format="PNG")
