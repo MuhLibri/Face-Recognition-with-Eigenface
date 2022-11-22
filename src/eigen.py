@@ -48,6 +48,7 @@ def getCovariance(difference):
     # at=np.transpose(a)
     covariance=np.matmul(difference,at)
     covariance = (covariance/len(difference))
+    return covariance
     # l=len(difference)
     # covariance=[]
     # for dif in difference:
@@ -57,7 +58,6 @@ def getCovariance(difference):
     #     print(np.matmul(dif,at))
         # covariance.append(np.matmul(dif,at))
     # covariance = (covariance / len(difference))
-    return covariance
 # def QRDecomposition(covariant):
 #     A=np.copy(covariant)
 #     # print(len(A),len(A[0]))
@@ -216,6 +216,7 @@ def eigen(A,maxiter=1000):
     for vec in U:
         eigenV.append(vec)
     eigval=np.diag(A)
+    return eigval,eigenV;
     # pel=list(zip(eigval,eigenV))
     # print(pel)
     # for i in range(len(eigval)):
@@ -229,7 +230,6 @@ def eigen(A,maxiter=1000):
         # eigvecs.append(eigvec)
     # print(A)
     # print(len(A),len(A[0]))
-    return eigval,eigenV;
 # def eigen(A, maxiter=1000):
 #     n = len(A)
 #     U = np.identity(n)

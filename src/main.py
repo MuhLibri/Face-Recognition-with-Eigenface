@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk,Image
 from faceRecog import *
-from tesss import *
+from eigen import *
 from scipy import interpolate
 import time
 import  numpy as np
