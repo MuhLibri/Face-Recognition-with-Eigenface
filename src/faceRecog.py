@@ -28,7 +28,7 @@ def facerecog (img,eigenfaces,normimgList,mean):
     weight2 = np.dot(normimgList,teigenfaces)
     shortestEuclidean = euclideanDistance(weigth1[0],weight2[0])
     indexSim = 0
-    # toleranceLevel = 3
+    maxEuclidean = shortestEuclidean
 
     # Mencari euclidean terkecil antara bobot image dengan bobot dataset
     for i in range (1,len(eigenfaces)):
@@ -36,10 +36,14 @@ def facerecog (img,eigenfaces,normimgList,mean):
         if (shortestEuclidean > ek):
             shortestEuclidean = ek
             indexSim = i
+        if (maxEuclidean < ek):
+            maxEuclidean = ek
+
+    toleranceLevel = maxEuclidean/15
 
     # Mengembalikan -1 jika tidak ada foto yang cocok       
-    # if (shortestEuclidean > toleranceLevel):
-    #     indexSim = -1
+    if (shortestEuclidean > toleranceLevel):
+        indexSim = -1
 
     return indexSim
 
