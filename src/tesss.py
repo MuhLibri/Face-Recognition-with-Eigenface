@@ -11,7 +11,7 @@ def readAllImgInFolderRGB(path):
     imglist=[]
     for file in os.listdir(path):
         img = cv2.imread(os.path.join(path,file),cv2.IMREAD_ANYCOLOR)
-        # img = cv2.resize(img,(256,256))
+        img = cv2.resize(img,(256,256))
         if img is not None:
             # img=np.reshape(img,-1)
             imglist.append(img)
