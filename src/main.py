@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk,Image
@@ -5,6 +6,7 @@ from faceRecog import *
 from tesss import *
 from scipy import interpolate
 import time
+import  numpy as np
 
 imgfiletype=[("jpg image","*.jpg"),("png image","*.png")]
 
@@ -39,7 +41,9 @@ def processimg():
     print("3")
     d = getCovariance(c)
     print("4")
-    val, vec = eigen(d, 1)
+    val, vec = eigen(d, 60)
+    np.savetxt("eigenval.txt",val)
+    np.savetxt("eigenvalnp.txt",np.linalg.eig(d)[0])
     print("5")
     # val1, vec1 = np.linalg.eig(d)
     x = eigenFace(vec, c)
