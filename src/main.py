@@ -43,6 +43,7 @@ def processimg():
     print("5")
     # val1, vec1 = np.linalg.eig(d)
     x = eigenFace(vec, c)
+    saveEigenFaces(x)
     print("6")
     # x2 = eigenFace(vec1, c)
     # m = interpolate.interp1d([min(img), max(img)], [0, 255])

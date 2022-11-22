@@ -256,6 +256,11 @@ def saveEigenFaces(eigenfaces):
     for i in range(len(eigenfaces)):
         img=PIL.Image.fromarray(eigenfaces[i].reshape(256,256))
         img=img.convert("L")
+        try:
+            os.mkdir("../test/eigenfaces")
+        except:
+            pass
+        img.save("../test/eigenfaces/"+str(i)+".png")
 # a=[[random.random() for i in range(3)] for i in range(3)]
 # print(a)
 # Qgr,Rgr=QRgrammod(np.array(a))
