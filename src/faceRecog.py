@@ -1,6 +1,5 @@
 import math
 import numpy
-from utility import *
 from tesss import *
 import cv2
 import PIL
